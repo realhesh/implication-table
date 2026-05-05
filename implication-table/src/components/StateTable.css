@@ -1,0 +1,11 @@
+table td{
+    padding:4px;
+}
+input{
+    width: 75px;
+}
+table{
+    padding:4px;
+    justify-content:center;
+    align-items:center;
+}
