@@ -1,6 +1,6 @@
 import './ImplicationTable.css'; // Make sure to keep your CSS file for the borders/X's!
 import {useState,useEffect} from 'react'
-function nextImplicationTable(implicationData,setImplicationData){
+function nextImplicationTable(implicationData,setImplicationData,setReductionComplete){
     let nextData = JSON.parse(JSON.stringify(implicationData));
     let madeChanges=0;
     for(const [key,value] of Object.entries(nextData)){
@@ -16,15 +16,16 @@ function nextImplicationTable(implicationData,setImplicationData){
     }
     if(madeChanges==0){
         console.log("Done nexxting idk");
+        setReductionComplete(true);
         return 0;
     }
     setImplicationData(nextData);
     return 1;
 }
-function ImplicationTable({tableData, numInputs, uniqueStates}) {
+function ImplicationTable({tableData, numInputs, uniqueStates,setReductionComplete,implicationData,setImplicationData}) {
     const colStates = uniqueStates.sort().slice(1);
     const rowStates = uniqueStates.sort().slice(0, -1);
-    const [implicationData,setImplicationData] = useState({});
+    
     //let implicationData={};
     //console.log(rowStates,colStates);
     useEffect( ()=>{
@@ -104,7 +105,7 @@ function ImplicationTable({tableData, numInputs, uniqueStates}) {
                 </tbody>    
             </table>
         </div>
-        <button onClick={()=>nextImplicationTable(implicationData,setImplicationData)}>Do another Pass(reduced will appear after passes are done)</button>
+        <button onClick={()=>nextImplicationTable(implicationData,setImplicationData,setReductionComplete)}>Do another Pass(reduced will appear after passes are done)</button>
         </>
     );
 }

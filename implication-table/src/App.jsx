@@ -24,6 +24,7 @@ function App() {
   const [uniqueStates, setUniqueStates] = useState([]);
   const [numRows, setNumRows] = useState(2);
   const [reductionComplete,setReductionComplete]=useState(false);
+  const [implicationData,setImplicationData] = useState({});
   return (
     <>
       <TableSpecs 
@@ -49,6 +50,9 @@ function App() {
           tableData={tableData}
           numInputs={numInputs}
           uniqueStates={uniqueStates}
+          setReductionComplete={setReductionComplete}
+          implicationData={implicationData}
+          setImplicationData={setImplicationData}
         />
       )}
     </>
