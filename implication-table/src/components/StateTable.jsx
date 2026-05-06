@@ -26,7 +26,7 @@ function isStateTableDataComplete(tableData,numInputs,setUniqueStates) {
     setUniqueStates(Array.from(uniqueStates));
     return true;
 }
-function StateTable({typeSelection, numInputs,tableData, setTableData,tableDataComplete,setTableDataComplete,setUniqueStates,numRows}) {
+function StateTable({typeSelection, numInputs,tableData, setTableData,tableDataComplete,setTableDataComplete,setUniqueStates,numRows,setReductionComplete}) {
     const numOutputs = typeSelection === 'mealy' ? 2 : 1;
     const numStates = Math.pow(2, numInputs);
     //console.log(numInputs,numStates);
@@ -47,6 +47,7 @@ function StateTable({typeSelection, numInputs,tableData, setTableData,tableDataC
         setTableData(
           newTableData
         )
+        setReductionComplete(false);
       }, [numInputs,numOutputs,numRows])
     const handleInputChange = (rowIndex,field,innerIndex,value) => {
         const updatedTableData = [...tableData];

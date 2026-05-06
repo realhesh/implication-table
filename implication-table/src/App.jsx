@@ -45,6 +45,7 @@ function App() {
       setTableDataComplete={setTableDataComplete}
       setUniqueStates={setUniqueStates}
       numRows={numRows}
+      setReductionComplete={setReductionComplete}
       />
       {tableDataComplete && (
         <ImplicationTable 
