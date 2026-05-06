@@ -8,7 +8,11 @@ function nextImplicationTable(implicationData,setImplicationData,setReductionCom
         for(const condition of value.conditions){
             const [c1,c2]=key.split('-');
             if(nextData[condition].status == 'False'){
-                madeChanges=1;
+                
+                if(nextData[`${s1}-${s2}`]?.status != 'False'){
+                    console.log("Change was made in ",`${s1}-${s2}`);
+                    madeChanges=1;
+                }
                 nextData[`${s1}-${s2}`].status='False';
                 nextData[`${s2}-${s1}`].status='False';
             }

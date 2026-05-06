@@ -6,6 +6,7 @@ import TableSpecs from './components/TableSpecs'
 import './App.css'
 import StateTable from './components/StateTable'
 import ImplicationTable from './components/ImplicationTable'
+import ReducedTable from './components/ReducedTable'
 //import 'bootstrap/dist/css/bootstrap.min.css';
 function App() {
   const [count, setCount] = useState(0)
@@ -53,6 +54,13 @@ function App() {
           setReductionComplete={setReductionComplete}
           implicationData={implicationData}
           setImplicationData={setImplicationData}
+        />
+      )}
+      {reductionComplete && (
+        <ReducedTable 
+            tableData={tableData}
+            implicationData={implicationData}     
+            uniqueStates={uniqueStates}  
         />
       )}
     </>
