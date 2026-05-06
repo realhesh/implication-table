@@ -1,4 +1,7 @@
 
+function nextChar(c) {
+    return String.fromCharCode(c.charCodeAt(0) + 1);
+}
 function dfs(graph,state,visited,currgroup){
     currgroup.push(state);
     visited[state]=1;
@@ -10,11 +13,12 @@ function dfs(graph,state,visited,currgroup){
     return;
 }
 function ReducedTable({tableData,implicationData,uniqueStates}){
-    let graph={},visited={};
+    let graph={},visited={},represented={};
     uniqueStates.forEach(state=>{
         graph[state]={}
         graph[state].children=[];
         visited[state]=false;
+        represented[state]=false;
     })
     console.log(graph);
     for(const[key,val] of Object.entries(implicationData)){
@@ -37,10 +41,35 @@ function ReducedTable({tableData,implicationData,uniqueStates}){
         }
     });
     console.log(groups);
+    let reducedTable={};
+    let representative={};
+    let curr = 'A';
+    groups.forEach(group=>{
+        group.forEach(state=>{
+            representative[state]=curr;
+        })
+        curr=nextChar(curr);
+    })
+
+    tableData.forEach(row=>{
+        if(!represented[representative[row.presentState]]){
+            represented[representative[row.presentState]]=true;
+            let newNextStates=[];
+            row.nextStates.forEach(state=>{
+                newNextStates.push(representative[state]);
+            })
+            reducedTable[representative[row.presentState]]={
+                presentState:representative[row.presentState],
+                nextStates:newNextStates,
+                output:row.output
+            }
+        }
+    });
+    //console.log('hi',reducedTable['a'].nextStates);
     return(
         <>
             <div>
-                Groups are : 
+                <h2>Groups are :</h2> 
                 <ul>
                     {groups.map(group=>(
                         <li>
@@ -48,6 +77,45 @@ function ReducedTable({tableData,implicationData,uniqueStates}){
                         </li>
                     ))}
                 </ul>
+            </div>
+            <div>
+                <table justify-content="center" align="center">
+                    <thead>
+                        <tr>
+                            <th style={{padding:'10px'}}>Present State</th>
+                            <th style={{padding:'10px'}}>Next States</th>
+                            <th style={{padding:'10px'}}>Output</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {
+                            Object.values(reducedTable).map(row=>(
+                                <tr>
+                                <td>{row.presentState}</td>
+                                <td>
+                                <div style={{display:'flex',justifyContent:'space-evenly'}}>
+                                {
+                                    row.nextStates.map(nextState=>(
+                                        <span>{nextState}</span>
+                                    ))
+                                }
+                                </div>
+                                </td>
+
+                                <td>
+                                <div style={{display:'flex',justifyContent:'space-evenly'}}>
+                                {
+                                    row.output.map(output=>(
+                                        <span>{output}</span>
+                                    ))
+                                }
+                                </div>
+                                </td>
+                                </tr>
+                            ))
+                        }
+                    </tbody>
+                </table>
             </div>
         </>
     );
