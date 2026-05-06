@@ -18,7 +18,7 @@ function ReducedTable({tableData,implicationData,uniqueStates}){
     })
     console.log(graph);
     for(const[key,val] of Object.entries(implicationData)){
-            if(val?.status != 'false'){
+            if(val?.status != 'False'){
             const [fst,scnd]=key.split('-');
             if(!graph[fst].children.includes(scnd)){
                 graph[fst].children.push(scnd);
@@ -35,7 +35,7 @@ function ReducedTable({tableData,implicationData,uniqueStates}){
         if(currgroup.length>0 ){
         groups.push(currgroup);
         }
-    })
+    });
     console.log(groups);
     return(
         <>
