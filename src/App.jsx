@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState,useEffect } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from './assets/vite.svg'
 import heroImg from './assets/hero.png'
@@ -13,7 +13,12 @@ function App() {
   const [typeSelection, setTypeSelection] = useState('moore')
   const [numInputs, setNumInputs] = useState(1)
   const numStates = Math.pow(2, numInputs);
-  const numOutputs = typeSelection === 'mealy' ? 2 : 1;
+
+  let numOutputs = typeSelection === 'mealy' ? 2 : 1;
+  useEffect(()=>{
+    numOutputs = typeSelection === 'mealy' ? 2 : 1;
+  },[typeSelection]);
+  console.log("Num outputs is ",numOutputs);
   const [tableData, setTableData] = useState(
     Array(numStates).fill(null).map(()=>({
         presentState:'',
@@ -46,6 +51,7 @@ function App() {
       setUniqueStates={setUniqueStates}
       numRows={numRows}
       setReductionComplete={setReductionComplete}
+      numOutputs={numOutputs}
       />
       {tableDataComplete && (
         <ImplicationTable 

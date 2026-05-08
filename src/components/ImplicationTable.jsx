@@ -84,7 +84,7 @@ function ImplicationTable({tableData, numInputs, uniqueStates,setReductionComple
                             {
                                 rowStates.slice(0,index+1).map(row=>{
                                     const key = element < row ? `${element}-${row}` : `${row}-${element}`;
-                                    return (<td style={{border:"1px solid black",backgroundColor:coloring[implicationData[key]?.status],color:'black',fontWeight:'bold',width:'40px',height:'40px'}}>
+                                    return (<td style={{border:"1px solid black",backgroundColor:coloring[implicationData[key]?.status],color:'black',fontWeight:'bold',width:'40px',height:'40px',overflow:'auto'}}>
                                     <div>
                                         {
                                             implicationData[key]?.conditions.map(condition=>(

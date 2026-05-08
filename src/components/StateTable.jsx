@@ -26,13 +26,12 @@ function isStateTableDataComplete(tableData,numInputs,setUniqueStates) {
     setUniqueStates(Array.from(uniqueStates));
     return true;
 }
-function StateTable({typeSelection, numInputs,tableData, setTableData,tableDataComplete,setTableDataComplete,setUniqueStates,numRows,setReductionComplete}) {
-    const numOutputs = typeSelection === 'mealy' ? 2 : 1;
+function StateTable({typeSelection, numInputs,tableData, setTableData,tableDataComplete,setTableDataComplete,setUniqueStates,numRows,setReductionComplete,numOutputs}) {
     const numStates = Math.pow(2, numInputs);
     //console.log(numInputs,numStates);
 
     useEffect(() => {
-        let newTableData = tableData;
+        let newTableData = [ ...tableData ];
         if(numRows < tableData.length){
             newTableData.pop();
         }
@@ -43,6 +42,15 @@ function StateTable({typeSelection, numInputs,tableData, setTableData,tableDataC
             }
             newTableData=[...tableData,newEntry];
         }
+        newTableData.forEach(row => {
+            // Add blank outputs if needed, or cut off extra ones
+            while (row.output.length < numOutputs) row.output.push('');
+            row.output.length = numOutputs; 
+
+            // Add blank next states if needed, or cut off extra ones
+            while (row.nextStates.length < numStates) row.nextStates.push('');
+            row.nextStates.length = numStates; 
+        });
         setTableDataComplete(isStateTableDataComplete(newTableData,numInputs,setUniqueStates));
         setTableData(
           newTableData
